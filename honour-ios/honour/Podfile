@@ -1,0 +1,22 @@
+platform :ios, '9.0'
+
+# 对于我们使用cocoapod引入的第三方,我们可以在podfile文件中 增加一句  inhibit_all_warnings! 来要pod的工程不显示任何警告
+inhibit_all_warnings!
+
+target 'honour' do
+    
+    # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+    use_frameworks!
+    
+    # 提示组件框架
+    pod 'SVProgressHUD'
+    pod 'MBProgressHUD'
+    
+    # 自动布局
+    pod 'Masonry'
+    pod 'PureLayout'
+    
+    # 响应函数式框架
+    pod 'ReactiveObjC'
+    
+end

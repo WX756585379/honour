@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honour.server.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.honour.server.entity.pojo.User">
+        <id column="pid" jdbcType="BIGINT" property="pid"/>
+        <result column="account" jdbcType="VARCHAR" property="account"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="wxopenid" jdbcType="VARCHAR" property="wxopenid"/>
+        <result column="role_id" jdbcType="BIGINT" property="roleId"/>
+        <result column="question" jdbcType="VARCHAR" property="question"/>
+        <result column="answer" jdbcType="VARCHAR" property="answer"/>
+        <result column="login_time" jdbcType="TIMESTAMP" property="loginTime"/>
+        <result column="login_ip" jdbcType="VARCHAR" property="loginIp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        pid, account, `password`, nick_name, real_name, gender, avatar, wxopenid, role_id,
+        question, answer, login_time, login_ip, create_time, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        where pid = #{pid,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByOpenId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        where wxopenid = #{openid}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_user
+        WHERE pid = #{pid,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.honour.server.entity.pojo.User">
+        INSERT INTO t_user (pid, account, `password`,
+                            nick_name, real_name, gender,
+                            avatar, wxopenid, role_id,
+                            question, answer, login_time,
+                            login_ip, create_time, update_time
+        )
+        VALUES (#{pid,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+                                        #{nickName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
+                                        #{gender,jdbcType=INTEGER},
+                                        #{avatar,jdbcType=VARCHAR}, #{wxopenid,jdbcType=VARCHAR},
+                                        #{roleId,jdbcType=BIGINT},
+                                        #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR},
+                #{loginTime,jdbcType=TIMESTAMP},
+                #{loginIp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.honour.server.entity.pojo.User">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="nickName != null">
+                nick_name,
+            </if>
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="wxopenid != null">
+                wxopenid,
+            </if>
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="question != null">
+                question,
+            </if>
+            <if test="answer != null">
+                answer,
+            </if>
+            <if test="loginTime != null">
+                login_time,
+            </if>
+            <if test="loginIp != null">
+                login_ip,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="wxopenid != null">
+                #{wxopenid,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="question != null">
+                #{question,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null">
+                #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loginIp != null">
+                #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.honour.server.entity.pojo.User">
+        update t_user
+        <set>
+            <if test="account != null">
+                account = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="wxopenid != null">
+                wxopenid = #{wxopenid,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="question != null">
+                question = #{question,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                answer = #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loginIp != null">
+                login_ip = #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where pid = #{pid,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.honour.server.entity.pojo.User">
+        UPDATE t_user
+        SET account     = #{account,jdbcType=VARCHAR},
+            `password`  = #{password,jdbcType=VARCHAR},
+            nick_name   = #{nickName,jdbcType=VARCHAR},
+            real_name   = #{realName,jdbcType=VARCHAR},
+            gender      = #{gender,jdbcType=INTEGER},
+            avatar      = #{avatar,jdbcType=VARCHAR},
+            wxopenid    = #{wxopenid,jdbcType=VARCHAR},
+            role_id     = #{roleId,jdbcType=BIGINT},
+            question    = #{question,jdbcType=VARCHAR},
+            answer      = #{answer,jdbcType=VARCHAR},
+            login_time  = #{loginTime,jdbcType=TIMESTAMP},
+            login_ip    = #{loginIp,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE pid = #{pid,jdbcType=BIGINT}
+    </update>
+</mapper>

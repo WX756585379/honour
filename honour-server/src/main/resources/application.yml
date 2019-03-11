@@ -22,6 +22,28 @@ spring:
           test-while-idle: true
           time-between-eviction-runs-millis: 60000
           filters: stat,wall
+  redis:
+        host: 127.0.0.1
+        port: 6379
+        password: foobared
+        jedis:
+          pool:
+            max-active: 8
+            max-idle: 8
+            min-idle: 0
+  security:
+    user:
+      name: yang
+      password: 123
+      roles: admin
+
+mybatis:
+  mapperLocations: classpath*:mapper/*.xml
+
+ignored:
+  urls:
+   - /honour/common/**
+   - /honour/test/**
 
 logging:
   level:

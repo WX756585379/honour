@@ -7,19 +7,21 @@ import 'normalize.css/normalize.css'
 import 'font-awesome/css/font-awesome.min.css'
 import {isNullOrBlank} from './utils/validate.js'
 import {initMenu} from './utils/utils'
+import md5 from 'js-md5'
 
 import store from './vuex'
 
 Vue.use(ElementUI)
 
 Vue.prototype.$store = store
+Vue.prototype.$md5 = md5;
 Vue.prototype.isNullOrBlank = isNullOrBlank
 
 Vue.config.productionTip = false
 
-// 使用钩子函数对路由进行权限跳转
+const whiteList = ['/login', '/register']
 router.beforeEach((to, from, next) => {
-	if (to.name === 'Login' || to.path === '/login') {
+	if (whiteList.indexOf(to.path) !== -1) {
 		next()
 		return
 	}

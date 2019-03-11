@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EnableTransactionManagement
+// @EnableTransactionManagement
 @MapperScan("com.honour.server.dao")
 public class HonourApplication {
 

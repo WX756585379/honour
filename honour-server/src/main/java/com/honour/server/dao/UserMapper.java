@@ -1,8 +1,12 @@
 package com.honour.server.dao;
 
+import com.honour.server.entity.pojo.Role;
 import com.honour.server.entity.pojo.User;
 
+import java.util.List;
+
 public interface UserMapper {
+
     int deleteByPrimaryKey(Long pid);
 
     int insert(User record);
@@ -15,5 +19,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    User selectByOpenId(String openid);
+    List<Role> getUserRolesByUid(Long uid);
+
+    User findByAccountName(String account);
 }

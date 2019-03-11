@@ -9,19 +9,19 @@
         <result column="real_name" jdbcType="VARCHAR" property="realName"/>
         <result column="gender" jdbcType="INTEGER" property="gender"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
-        <result column="wxopenid" jdbcType="VARCHAR" property="wxopenid"/>
-        <result column="role_id" jdbcType="BIGINT" property="roleId"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
         <result column="question" jdbcType="VARCHAR" property="question"/>
         <result column="answer" jdbcType="VARCHAR" property="answer"/>
         <result column="login_time" jdbcType="TIMESTAMP" property="loginTime"/>
         <result column="login_ip" jdbcType="VARCHAR" property="loginIp"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        pid, account, `password`, nick_name, real_name, gender, avatar, wxopenid, role_id,
-        question, answer, login_time, login_ip, create_time, update_time
+        pid, `account`, `password`, nick_name, real_name, gender, avatar, open_id, question,
+        answer, login_time, login_ip, `status`, create_time, update_time
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -31,33 +31,39 @@
         where pid = #{pid,jdbcType=BIGINT}
     </select>
 
-    <select id="selectByOpenId" resultMap="BaseResultMap">
+    <select id="findByAccountName" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from t_user
-        where wxopenid = #{openid}
+        from t_user where `account` = #{account}
+    </select>
+
+    <select id="getUserRolesByUid" resultType="com.honour.server.entity.pojo.Role">
+        SELECT r.*
+        FROM t_role r, t_user_role ur
+        WHERE r.pid = ur.role_id AND ur.user_id = #{uid}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM t_user
         WHERE pid = #{pid,jdbcType=BIGINT}
     </delete>
+
     <insert id="insert" parameterType="com.honour.server.entity.pojo.User">
         INSERT INTO t_user (pid, account, `password`,
                             nick_name, real_name, gender,
-                            avatar, wxopenid, role_id,
-                            question, answer, login_time,
-                            login_ip, create_time, update_time
-        )
+                            avatar, wxopenid, question,
+                            answer, login_time, login_ip,
+                            enabled, locked, create_time,
+                            update_time)
         VALUES (#{pid,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
                                         #{nickName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
                                         #{gender,jdbcType=INTEGER},
                                         #{avatar,jdbcType=VARCHAR}, #{wxopenid,jdbcType=VARCHAR},
-                                        #{roleId,jdbcType=BIGINT},
-                                        #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR},
-                #{loginTime,jdbcType=TIMESTAMP},
-                #{loginIp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-        )
+                                        #{question,jdbcType=VARCHAR},
+                                        #{answer,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP},
+                #{loginIp,jdbcType=VARCHAR},
+                #{enabled,jdbcType=BIT}, #{locked,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.honour.server.entity.pojo.User">
         insert into t_user
@@ -86,9 +92,6 @@
             <if test="wxopenid != null">
                 wxopenid,
             </if>
-            <if test="roleId != null">
-                role_id,
-            </if>
             <if test="question != null">
                 question,
             </if>
@@ -100,6 +103,12 @@
             </if>
             <if test="loginIp != null">
                 login_ip,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="locked != null">
+                locked,
             </if>
             <if test="createTime != null">
                 create_time,
@@ -133,9 +142,6 @@
             <if test="wxopenid != null">
                 #{wxopenid,jdbcType=VARCHAR},
             </if>
-            <if test="roleId != null">
-                #{roleId,jdbcType=BIGINT},
-            </if>
             <if test="question != null">
                 #{question,jdbcType=VARCHAR},
             </if>
@@ -147,6 +153,12 @@
             </if>
             <if test="loginIp != null">
                 #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=BIT},
+            </if>
+            <if test="locked != null">
+                #{locked,jdbcType=BIT},
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
@@ -180,9 +192,6 @@
             <if test="wxopenid != null">
                 wxopenid = #{wxopenid,jdbcType=VARCHAR},
             </if>
-            <if test="roleId != null">
-                role_id = #{roleId,jdbcType=BIGINT},
-            </if>
             <if test="question != null">
                 question = #{question,jdbcType=VARCHAR},
             </if>
@@ -194,6 +203,12 @@
             </if>
             <if test="loginIp != null">
                 login_ip = #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=BIT},
+            </if>
+            <if test="locked != null">
+                locked = #{locked,jdbcType=BIT},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -213,11 +228,12 @@
             gender      = #{gender,jdbcType=INTEGER},
             avatar      = #{avatar,jdbcType=VARCHAR},
             wxopenid    = #{wxopenid,jdbcType=VARCHAR},
-            role_id     = #{roleId,jdbcType=BIGINT},
             question    = #{question,jdbcType=VARCHAR},
             answer      = #{answer,jdbcType=VARCHAR},
             login_time  = #{loginTime,jdbcType=TIMESTAMP},
             login_ip    = #{loginIp,jdbcType=VARCHAR},
+            enabled     = #{enabled,jdbcType=BIT},
+            locked      = #{locked,jdbcType=BIT},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             update_time = #{updateTime,jdbcType=TIMESTAMP}
         WHERE pid = #{pid,jdbcType=BIGINT}

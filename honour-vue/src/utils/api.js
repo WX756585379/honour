@@ -1,7 +1,10 @@
-import {get, post} from "./http.js";
+import {post, getRequest} from "./http.js";
 
 // 登录
-export const apiLoginCellphone = params => get('/login/cellphone', params)
+export const apiLogin = params => post('/honour/login', params)
 
 // 退出登录
 export const apiLoginOut = params => post('/logout', params)
+
+// 获取验证码
+export const geetest = params => getRequest('/honour/common/geeInit?t=' + (new Date()).getTime(), params)

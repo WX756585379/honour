@@ -58,7 +58,8 @@ public class WeiXinController {
         WxJscodeResult jscodeResult = JsonUtil.jsonToPojo(response.getBody(), WxJscodeResult.class);
         if (jscodeResult == null) return BaseResponse.error();
 
-        User user = userMapper.selectByOpenId(jscodeResult.getOpenid());
+        User user = null;
+        // User user = userMapper.selectByOpenId(jscodeResult.getOpenid());
         if (user == null) {
             user = new User();
             user.setAccount(jscodeResult.getOpenid());
@@ -67,7 +68,7 @@ public class WeiXinController {
             user.setRealName(weXinUserInfo.getNickName());
             user.setGender(weXinUserInfo.getGender());
             user.setAvatar(weXinUserInfo.getAvatarUrl());
-            user.setWxopenid(jscodeResult.getOpenid());
+            user.setOpenId(jscodeResult.getOpenid());
             user.setLoginIp(IpUtil.client(httpServletRequest));
             user.setLoginTime(new Date());
             user.setCreateTime(new Date());

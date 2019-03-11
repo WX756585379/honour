@@ -13,13 +13,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class Swagger2 {
+public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
+                .apiInfo(apiInfo()).select()
                 .apis(RequestHandlerSelectors.basePackage("com.honour.server.web"))
                 .paths(PathSelectors.any())
                 .build();

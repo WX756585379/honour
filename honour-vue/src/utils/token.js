@@ -6,8 +6,12 @@ export function getCookie(key) {
 	return Cookies.get(key)
 }
 
-export function setCookie(key, token) {
-	return Cookies.set(key, token)
+export function setCookie(key, content) {
+	if (!key) return
+	if (typeof content !== 'string') {
+		content = JSON.stringify(content)
+	}
+	return Cookies.set(key, content)
 }
 
 export function removeCookie(key) {

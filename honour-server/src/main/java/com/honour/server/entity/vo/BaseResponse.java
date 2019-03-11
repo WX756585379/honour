@@ -53,7 +53,7 @@ public class BaseResponse implements Serializable {
     }
 
     public static BaseResponse success() {
-        return new BaseResponse(ResponseEnum.SUCCESS.getCode());
+        return new BaseResponse(ResponseEnum.SUCCESS.getCode(), ResponseEnum.SUCCESS.getDesc());
     }
 
     public static BaseResponse successOfMsg(String msg) {
@@ -61,19 +61,23 @@ public class BaseResponse implements Serializable {
     }
 
     public static BaseResponse successOfData(Object data) {
-        return new BaseResponse(ResponseEnum.SUCCESS.getCode(), data);
+        return new BaseResponse(ResponseEnum.SUCCESS.getCode(), ResponseEnum.SUCCESS.getDesc(), data);
     }
 
     public static BaseResponse success(String msg, Object data) {
         return new BaseResponse(ResponseEnum.SUCCESS.getCode(), msg, data);
     }
 
-    public static BaseResponse error() {
-        return new BaseResponse(ResponseEnum.ERROR.getCode(), ResponseEnum.ERROR.getDesc());
+    public static BaseResponse error(int code, String message) {
+        return new BaseResponse(code, message);
     }
 
     public static BaseResponse error(String errorMessage) {
         return new BaseResponse(ResponseEnum.ERROR.getCode(), errorMessage);
+    }
+
+    public static BaseResponse error() {
+        return new BaseResponse(ResponseEnum.ERROR.getCode(), ResponseEnum.ERROR.getDesc());
     }
 
     public void setResultData(Object data) {

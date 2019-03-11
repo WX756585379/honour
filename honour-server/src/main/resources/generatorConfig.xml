@@ -51,8 +51,8 @@
         </javaClientGenerator>
 
         <!--表名-->
-        <table schema="honour" tableName="t_user"
-               domainObjectName="User"
+        <table schema="honour" tableName="t_menu"
+               domainObjectName="Menu"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

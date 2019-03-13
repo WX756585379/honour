@@ -19,7 +19,7 @@
                             <div id="captcha"><p id="wait">正在加载验证码...</p></div>
                         </li>
                         <li style="text-align: right" class="pr">
-                            <el-checkbox class="auto-login" v-model="autoLogin">记住密码</el-checkbox>
+                            <el-checkbox style="float: left" v-model="autoLogin">记住密码</el-checkbox>
                             <a class="register" @click="toRegister">注册 XMall 账号</a>
                             <a style="padding: 1px 0 0 10px" @click="open('找回密码','请联系作者邮箱找回密码或使用测试账号登录')">忘记密码 ?</a>
                         </li>
@@ -52,7 +52,6 @@
 
 <script>
 	/* eslint-disable no-unused-vars */
-
 	import YButton from '../common/YButton'
 	import {geetest, apiLogin} from '../../utils/api.js'
 	import {setCookie, removeCookie, setToken} from "../../utils/token";
@@ -87,12 +86,12 @@
 			},
 			login() {
 				if (!this.ruleForm.userName || !this.ruleForm.userPwd) {
-					this.message('账号或者密码不能为空!')
+					this.$message.error({message: '账号或者密码不能为空!'})
 					return false
 				}
 				var result = captcha.getValidate()
 				if (!result) {
-					this.message('请完成验证')
+					this.$message.error({message: '请完成验证!'})
 					this.loginTxt = '登录'
 					return false
 				}
@@ -107,9 +106,11 @@
 					statusKey: this.statusKey
 				}
 				apiLogin(params).then(res => {
-					setToken(res.token)
-				}).catch(err => {
+					// setToken(res.token)
+					this.$router.push({path: '/register'})
+				}, error => {
 					this.loginTxt = '登录'
+					captcha.reset()
 				})
 			},
 			rememberPass() {

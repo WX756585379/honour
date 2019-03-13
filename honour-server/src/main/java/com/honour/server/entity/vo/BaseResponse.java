@@ -1,9 +1,11 @@
 package com.honour.server.entity.vo;
 
+import lombok.Data;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.io.Serializable;
 
+@Data
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class BaseResponse implements Serializable {
 
@@ -12,7 +14,7 @@ public class BaseResponse implements Serializable {
     public static final int RESULT_CODE_SERVICE_UNAVAILABLE = -98;
     public static final int RESULT_CODE_ERROR_UNKNOWN = -99;
 
-    private Object data;
+    private Object result;
     private int code;
     private String message;
     private String debugMessage;
@@ -30,7 +32,7 @@ public class BaseResponse implements Serializable {
 
     private BaseResponse(int code, Object data) {
         this.code = code;
-        this.data = data;
+        this.result = data;
     }
 
     private BaseResponse(int code, String message) {
@@ -40,7 +42,7 @@ public class BaseResponse implements Serializable {
 
     private BaseResponse(int code, String message, Object data) {
         this.code = code;
-        this.data = data;
+        this.result = data;
         this.message = message;
     }
 
@@ -56,11 +58,11 @@ public class BaseResponse implements Serializable {
         return new BaseResponse(ResponseEnum.SUCCESS.getCode(), ResponseEnum.SUCCESS.getDesc());
     }
 
-    public static BaseResponse successOfMsg(String msg) {
+    public static BaseResponse success(String msg) {
         return new BaseResponse(ResponseEnum.SUCCESS.getCode(), msg);
     }
 
-    public static BaseResponse successOfData(Object data) {
+    public static BaseResponse success(Object data) {
         return new BaseResponse(ResponseEnum.SUCCESS.getCode(), ResponseEnum.SUCCESS.getDesc(), data);
     }
 
@@ -68,70 +70,15 @@ public class BaseResponse implements Serializable {
         return new BaseResponse(ResponseEnum.SUCCESS.getCode(), msg, data);
     }
 
-    public static BaseResponse error(int code, String message) {
-        return new BaseResponse(code, message);
-    }
-
-    public static BaseResponse error(String errorMessage) {
-        return new BaseResponse(ResponseEnum.ERROR.getCode(), errorMessage);
-    }
-
     public static BaseResponse error() {
         return new BaseResponse(ResponseEnum.ERROR.getCode(), ResponseEnum.ERROR.getDesc());
     }
 
-    public void setResultData(Object data) {
-        this.data = data;
+    public static BaseResponse error(String msg) {
+        return new BaseResponse(ResponseEnum.ERROR.getCode(), msg);
     }
 
-    public void setResponseEnum(ResponseEnum responseEnum) {
-        setResultCodeAndMessage(responseEnum.getCode(), responseEnum.getDesc());
-    }
-
-    public void setResultCodeAndMessage(int code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public BaseResponse setData(Object data) {
-        this.data = data;
-        return this;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public BaseResponse setMessage(String message) {
-        this.message = message;
-        return this;
-    }
-
-    public String getDebugMessage() {
-        return debugMessage;
-    }
-
-    public void setDebugMessage(String debugMessage) {
-        this.debugMessage = debugMessage;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public static BaseResponse error(int code, String message) {
+        return new BaseResponse(code, message);
     }
 }

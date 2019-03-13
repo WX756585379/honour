@@ -390,12 +390,12 @@ public class RedisUtil {
      * @param values 值 可以是多个
      * @return 移除的个数
      */
-    public long setRemove(String key, Object... values) {
+    public Long setRemove(String key, Object... values) {
         try {
             return redisTemplate.opsForSet().remove(key, values);
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return 0L;
         }
     }
     //===============================list=================================

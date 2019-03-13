@@ -22,7 +22,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
 	const data = response.data
 	if (data.code === 0) {
-		return data.data
+		return data.result
 	}
 	if (data.message !== null) {
 		Message.error(data.message);
@@ -40,7 +40,7 @@ export function get(url, params = {}) {
 		axios.get(url, {
 			params: params
 		}).then(res => {
-			resolve(res.data)
+			resolve(res)
 		}).catch(err => {
 			reject(err)
 		})
@@ -50,13 +50,9 @@ export function get(url, params = {}) {
 export function post(url, params = {}) {
 	return new Promise((resolve, reject) => {
 		axios.post(url, params).then(res => {
-			resolve(res.data);
+			resolve(res);
 		}).catch(err => {
 			reject(err)
 		})
 	})
-}
-
-export const getRequest = (url) => {
-	return axios({method: 'get', url: url})
 }

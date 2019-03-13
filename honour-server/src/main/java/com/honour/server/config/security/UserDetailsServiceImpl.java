@@ -16,9 +16,6 @@ import org.springframework.stereotype.Component;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
-    @Autowired
     private UserService userService;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

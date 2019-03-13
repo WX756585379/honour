@@ -33,7 +33,7 @@ public class CaptchaController {
         captcha.setCaptchaId(captchaId);
         // 缓存验证码
         stringRedisTemplate.opsForValue().set(captchaId, code, 3L, TimeUnit.MINUTES);
-        return BaseResponse.successOfData(captcha);
+        return BaseResponse.success(captcha);
     }
 
     @RequestMapping(value = "/draw/{captchaId}", method = RequestMethod.GET)

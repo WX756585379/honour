@@ -41,6 +41,6 @@ public class GeeTestController {
         if (geetInit != null) {
             geetInit.setStatusKey(key);
         }
-        return BaseResponse.successOfData(geetInit);
+        return BaseResponse.success(geetInit);
     }
 }

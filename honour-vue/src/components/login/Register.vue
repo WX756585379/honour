@@ -25,20 +25,17 @@
                                 <div id="captcha"><p id="wait">正在加载验证码...</p></div>
                             </li>
                         </ul>
-                        <el-checkbox class="agree" v-model="agreement">
-                            我已阅读并同意遵守
+                        <div style="float: left;margin-bottom: 20px">
+                            <el-checkbox style="margin-right: 5px" v-model="agreement"/>
+                            <span>我已阅读并同意遵守</span>
                             <a @click="open('法律声明','此仅为个人练习开源模仿项目，仅供学习参考，承担不起任何法律问题')">法律声明</a> 和
                             <a @click="open('隐私条款','本网站将不会严格遵守有关法律法规和本隐私政策所载明的内容收集、使用您的信息')">隐私条款</a>
-                        </el-checkbox>
-                        <div style="margin-bottom: 30px;">
-                            <y-button
-                                    :classStyle="registered.userPwd&&registered.userPwd2&&registered.userName&&regisTxt==='注册' ? 'main-btn' : 'disabled-btn'"
-                                    :text="regisTxt"
-                                    style="margin: 0;width: 100%;height: 48px;font-size: 18px;line-height: 48px"
-                                    @btnClick="doRegist">
-                            </y-button>
                         </div>
-                        <div class="border" style="margin-bottom: 10px;"></div>
+                        <y-button
+                                :classStyle="registered.userPwd&&registered.userPwd2&&registered.userName&&regisTxt==='注册' ? 'main-btn' : 'disabled-btn'"
+                                :text="regisTxt"
+                                style="margin: 0;width: 100%;height: 48px;font-size: 18px;line-height: 48px"
+                                @btnClick="doRegist"/>
                         <ul class="common-form pr">
                             <li style="text-align: center;line-height: 48px;margin-bottom: 0;font-size: 12px;color: #999;">
                                 <span>如果您已拥有 XMall 账号，则可在此</span>
@@ -53,7 +50,13 @@
 </template>
 
 <script>
+	/* eslint-disable no-unused-vars */
 	import YButton from '../common/YButton'
+	import {geetest} from '../../utils/api.js'
+
+	require('../../utils/geetest/gt.js')
+
+	var captcha = null
 
 	export default {
 		name: "Register",
@@ -67,8 +70,11 @@
 				},
 				regisTxt: '注册',
 				agreement: false,
-				captcha: null
+				statusKey: ''
 			}
+		},
+		created() {
+			this.init_geetest()
 		},
 		methods: {
 			open(t, m) {
@@ -104,6 +110,25 @@
 			toLogin() {
 				this.$router.push({path: '/login'})
 			},
+			init_geetest() {
+				geetest().then(res => {
+					this.statusKey = res.statusKey
+					window.initGeetest({
+						gt: res.gt,
+						challenge: res.challenge,
+						new_captcha: res.new_captcha,
+						offline: !res.success,
+						product: 'popup',
+						width: '100%'
+					}, function (captchaObj) {
+						captcha = captchaObj
+						captchaObj.appendTo('#captcha')
+						captchaObj.onReady(function () {
+							document.getElementById('wait').style.display = 'none'
+						})
+					})
+				})
+			}
 		},
 		components: {
 			YButton

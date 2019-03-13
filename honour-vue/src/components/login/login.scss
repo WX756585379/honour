@@ -31,7 +31,7 @@
   width: 450px;
   border: 1px solid #dadada;
   border-radius: 10px;
-  top: 50%;
+  top: 55%;
   left: 50%;
   margin-left: -225px;
   position: absolute;
@@ -113,20 +113,14 @@
     margin-bottom: 15px;
     position: relative;
   }
-  .auto-login {
-    position: absolute;
-    top: 0;
-    left: 2px;
-    color: #999;
-  }
   .register {
     padding: 1px 10px 0;
     border-right: 1px solid #ccc;
   }
-  .border {
-    margin-top: 10px;
-    border-bottom: 1px solid #ccc;
-  }
+  //.border {
+    //margin-top: 10px;
+    //border-bottom: 1px solid #ccc;
+  //}
   .other {
     margin: 20px 5px 0 0;
     width: auto;
@@ -137,10 +131,6 @@
   .footer {
     display: flex;
     flex-direction: row;
-  }
-  .agree {
-    margin-bottom: 30px;
-    color: #999;
   }
 }
 

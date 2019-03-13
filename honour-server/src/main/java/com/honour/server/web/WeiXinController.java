@@ -78,6 +78,6 @@ public class WeiXinController {
             user.setLoginTime(new Date());
             userMapper.updateByPrimaryKeySelective(user);
         }
-        return BaseResponse.successOfData(response.getBody());
+        return BaseResponse.success(response.getBody());
     }
 }

@@ -1,4 +1,4 @@
-import {post, getRequest} from "./http.js";
+import {post, get} from "./http.js";
 
 // 登录
 export const apiLogin = params => post('/honour/auth/login', params)
@@ -7,4 +7,4 @@ export const apiLogin = params => post('/honour/auth/login', params)
 export const apiLoginOut = params => post('/logout', params)
 
 // 获取验证码
-export const geetest = params => getRequest('/honour/common/geeInit?t=' + (new Date()).getTime(), params)
+export const geetest = params => get('/honour/common/geeInit?t=' + (new Date()).getTime(), params)

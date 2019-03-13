@@ -1,7 +1,7 @@
 import {post, getRequest} from "./http.js";
 
 // 登录
-export const apiLogin = params => post('/honour/login', params)
+export const apiLogin = params => post('/honour/auth/login', params)
 
 // 退出登录
 export const apiLoginOut = params => post('/logout', params)

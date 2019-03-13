@@ -19,29 +19,10 @@ public class GeetestLib {
     public static final boolean newfailback = true;
 
     protected final String verName = "4.0";
-    // protected final String sdkLang = "java";
-
     protected final String apiUrl = "http://api.geetest.com";
     protected final String registerUrl = "/register.php";
     protected final String validateUrl = "/validate.php";
-
     protected final String json_format = "1";
-
-    /**
-     * 极验验证二次验证表单数据 chllenge
-     */
-    // public static final String fn_geetest_challenge = "geetest_challenge";
-
-    /**
-     * 极验验证二次验证表单数据 validate
-     */
-    // public static final String fn_geetest_validate = "geetest_validate";
-
-    /**
-     * 极验验证二次验证表单数据 seccode
-     */
-    // public static final String fn_geetest_seccode = "geetest_seccode";
-
 
     /**
      * 返回字符串
@@ -52,11 +33,6 @@ public class GeetestLib {
      * 调试开关，是否输出调试日志
      */
     public boolean debugCode = true;
-
-    /**
-     * 极验验证API服务状态Session Key
-     */
-    public String gtServerStatusSessionKey = "gt_server_status";
 
     /**
      * 获取本次验证初始化返回字符串
@@ -179,11 +155,8 @@ public class GeetestLib {
     /**
      * 判断一个表单对象值是否为空
      */
-    protected boolean objIsEmpty(Object gtObj) {
-        if (gtObj == null) {
-            return true;
-        }
-        return gtObj.toString().trim().length() == 0;
+    private boolean objIsEmpty(Object gtObj) {
+        return gtObj == null || gtObj.toString().trim().length() == 0;
     }
 
     /**
@@ -192,7 +165,6 @@ public class GeetestLib {
     private boolean resquestIsLegal(String challenge, String validate, String seccode) {
         return !objIsEmpty(challenge) && !objIsEmpty(validate) && !objIsEmpty(seccode);
     }
-
 
     /**
      * 服务正常的情况下使用的验证方式,向gt-server进行二次验证,获取验证结果
@@ -211,8 +183,7 @@ public class GeetestLib {
         String ipAddress = data.get("ip_address");
 
         String postUrl = this.apiUrl + this.validateUrl;
-        String param = String.format("challenge=%s&validate=%s&seccode=%s&json_format=%s",
-                challenge, validate, seccode, this.json_format);
+        String param = String.format("challenge=%s&validate=%s&seccode=%s&json_format=%s", challenge, validate, seccode, this.json_format);
 
         if (userId != null) {
             param = param + "&user_id=" + userId;
@@ -228,17 +199,12 @@ public class GeetestLib {
 
         String response = "";
         try {
-
             if (validate.length() <= 0) {
-
                 return 0;
-
             }
 
             if (!checkResultByPrivate(challenge, validate)) {
-
                 return 0;
-
             }
 
             gtlog("checkResultByPrivate");
@@ -246,7 +212,6 @@ public class GeetestLib {
             response = readContentFromPost(postUrl, param);
 
             gtlog("response: " + response);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -263,7 +228,6 @@ public class GeetestLib {
             } else {
                 return 0;
             }
-
         } catch (Exception e) {
             gtlog("json load error");
             return 0;
@@ -355,7 +319,7 @@ public class GeetestLib {
      * md5 加密
      */
     private String md5Encode(String plainText) {
-        String re_md5 = new String();
+        String re_md5 = "";
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(plainText.getBytes());

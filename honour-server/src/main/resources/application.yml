@@ -43,6 +43,7 @@ mybatis:
 ignored:
   urls:
    - /honour/common/**
+   - /honour/auth/**
    - /honour/test/**
 
 logging:

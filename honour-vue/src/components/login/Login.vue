@@ -51,6 +51,8 @@
 </template>
 
 <script>
+	/* eslint-disable no-unused-vars */
+
 	import YButton from '../common/YButton'
 	import {geetest, apiLogin} from '../../utils/api.js'
 	import {setCookie, removeCookie, setToken} from "../../utils/token";
@@ -106,6 +108,8 @@
 				}
 				apiLogin(params).then(res => {
 					setToken(res.token)
+				}).catch(err => {
+					this.loginTxt = '登录'
 				})
 			},
 			rememberPass() {

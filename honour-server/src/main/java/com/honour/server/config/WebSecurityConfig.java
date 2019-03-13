@@ -71,7 +71,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/index.html", "/static/**", "/login_p", "/favicon.ico");
+        web.ignoring().antMatchers(HttpMethod.GET);
+        // web.ignoring().antMatchers("/index.html", "/static/**", "/login_p", "/favicon.ico");
     }
 
     @Override
@@ -85,12 +86,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         return o;
                     }
                 })
-                .antMatchers(HttpMethod.GET)
-                .permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/honour/needLogin")
-                .loginProcessingUrl("/honour/login").permitAll()
+                .loginProcessingUrl("/honour/needLogin")
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)
                 .and()

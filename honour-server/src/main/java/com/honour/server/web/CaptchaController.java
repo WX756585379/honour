@@ -3,6 +3,7 @@ package com.honour.server.web;
 import com.honour.server.entity.vo.BaseResponse;
 import com.honour.server.entity.vo.Captcha;
 import com.honour.server.utils.CreateVerifyCode;
+import com.honour.server.utils.jedis.RedisUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class CaptchaController {
 
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisUtil redisUtil;
 
     @GetMapping("/init")
     @ApiOperation(value = "初始化验证码")
@@ -32,7 +33,7 @@ public class CaptchaController {
         Captcha captcha = new Captcha();
         captcha.setCaptchaId(captchaId);
         // 缓存验证码
-        stringRedisTemplate.opsForValue().set(captchaId, code, 3L, TimeUnit.MINUTES);
+        redisUtil.set(captchaId, code, 3L, TimeUnit.MINUTES);
         return BaseResponse.success(captcha);
     }
 
@@ -41,7 +42,7 @@ public class CaptchaController {
     public void drawCaptcha(@PathVariable("captchaId") String captchaId, HttpServletResponse response) {
         try {
             //得到验证码 生成指定验证码
-            String code = stringRedisTemplate.opsForValue().get(captchaId);
+            String code = (String) redisUtil.get(captchaId);
             CreateVerifyCode vCode = new CreateVerifyCode(116, 36, 4, 10, code);
             vCode.write(response.getOutputStream());
         } catch (Exception e) {

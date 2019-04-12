@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `t_user`;
-CREATE TABLE `t_user` (
+DROP TABLE IF EXISTS `m_user`;
+CREATE TABLE `m_user` (
   `pid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '物理主键，自增',
   `account` varchar(20) NOT NULL COMMENT '登录账户',
   `password` varchar(50) NOT NULL COMMENT '用户密码，MD5加密',
@@ -11,6 +11,8 @@ CREATE TABLE `t_user` (
   `question` varchar(100) DEFAULT NULL COMMENT '找回密码问题',
   `answer` varchar(100) DEFAULT NULL COMMENT '找回密码答案',
   `login_time` datetime DEFAULT NULL COMMENT '记录登录时间',
+  `email` varchar(64) NOT NULL COMMENT '邮箱',
+  `phone` varchar(64) NOT NULL COMMENT '电话号码',
   `login_ip` varchar(64) NOT NULL DEFAULT '' COMMENT '最近一次登录IP地址',
   `status` char(3) NOT NULL DEFAULT 'EBL' COMMENT 'EBL-有效，DEL-删除，LCK-锁定',
   `create_time` datetime NOT NULL COMMENT '创建时间',
@@ -20,8 +22,8 @@ CREATE TABLE `t_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 
 
-DROP TABLE IF EXISTS `t_role`;
-CREATE TABLE `t_role` (
+DROP TABLE IF EXISTS `m_role`;
+CREATE TABLE `m_role` (
   `pid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '物理主键，自增',
   `name` varchar(64) NOT NULL COMMENT '角色',
   `name_zh` varchar(64) NOT NULL COMMENT '角色名称',
@@ -32,8 +34,8 @@ CREATE TABLE `t_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色';
 
 
-DROP TABLE IF EXISTS `t_user_role`;
-CREATE TABLE `t_user_role` (
+DROP TABLE IF EXISTS `m_user_role`;
+CREATE TABLE `m_user_role` (
   `pid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '物理主键，自增',
   `user_id` bigint(20) NOT NULL COMMENT '关联user',
   `role_id` bigint(20) NOT NULL COMMENT '关联role',
@@ -43,21 +45,8 @@ CREATE TABLE `t_user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关联表';
 
 
-DROP TABLE IF EXISTS `t_contact`;
-CREATE TABLE `t_contact` (
-  `pid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '物理主键，自增',
-  `user_id` bigint(20) NOT NULL COMMENT '关联user',
-  `contact_type` int(11) NOT NULL COMMENT '联系方式,1-手机号，2-电话号码，3-email，4-微信，5-QQ',
-  `contact_way` varchar(64) NOT NULL COMMENT '联系方式',
-  `status` char(3) NOT NULL DEFAULT 'EBL' COMMENT 'EBL-有效，DEL-删除',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后一次更新时间',
-  PRIMARY KEY (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联系方式';
-
-
-DROP TABLE IF EXISTS `t_menu`;
-CREATE TABLE `t_menu` (
+DROP TABLE IF EXISTS `m_menu`;
+CREATE TABLE `m_menu` (
   `pid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '物理主键，自增',
   `url` varchar(64) NOT NULL COMMENT '用户密码，MD5加密',
   `path` varchar(64) NOT NULL COMMENT '登录账户',
@@ -74,8 +63,8 @@ CREATE TABLE `t_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='左侧菜单';
 
 
-DROP TABLE IF EXISTS `t_menu_role`;
-CREATE TABLE `t_menu_role` (
+DROP TABLE IF EXISTS `m_menu_role`;
+CREATE TABLE `m_menu_role` (
   `pid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '物理主键，自增',
   `role_id` bigint(20) NOT NULL COMMENT '关联role',
   `menu_id` bigint(20) NOT NULL COMMENT '关联menu',

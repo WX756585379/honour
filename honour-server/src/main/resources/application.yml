@@ -36,6 +36,13 @@ spring:
       name: yang
       password: 123
       roles: admin
+  aop:
+    auto: true
+    proxy-target-class: true
+  mail:
+    username: 756585379@qq.com
+    password: fhofdyjvlwmfbfde
+    host: smtp.qq.com
 
 mybatis:
   mapperLocations: classpath*:mapper/*.xml

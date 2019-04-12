@@ -1,2 +1,10 @@
 .idea
 .DS_Store
+
+Pods
+Pods/
+/dist/
+/target/
+dist/
+target/
+node_modules/

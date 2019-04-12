@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.LongAdder;
 
 @Service
 public class LoginService {
@@ -15,6 +19,13 @@ public class LoginService {
     private StringRedisTemplate stringRedisTemplate;
 
     public int validGeetestLibCode(LoginRegistVO loginVO) {
+
+        // Executors.newFixedThreadPool()
+        // Executors.newCachedThreadPool()
+        // Executors
+        // ExecutorService
+        // ThreadPoolExecutor
+
         //极验验证
         GeetestLib gtSdk = new GeetestLib();
         String challenge = loginVO.getChallenge();
@@ -42,4 +53,8 @@ public class LoginService {
         System.out.println(gtResult);
         return gtResult;
     }
+
+
 }
+
+

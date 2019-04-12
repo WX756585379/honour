@@ -1,9 +1,11 @@
-package com.honour.server.utils;
+package com.honour.server.utils.jedis;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import redis.clients.jedis.Jedis;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
+@SuppressWarnings("unchecked")
 public class RedisUtil {
 
     @Autowired
@@ -20,22 +23,31 @@ public class RedisUtil {
         this.redisTemplate = redisTemplate;
     }
 
+    private <T> T run(RedisCallBack<T> redisCallBack) {
+        try {
+            return redisCallBack.doInRedis(redisTemplate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * 指定缓存失效时间
      *
      * @param key  键
      * @param time 时间(秒)
      */
-    public boolean expire(String key, long time) {
-        try {
-            if (time > 0) {
-                redisTemplate.expire(key, time, TimeUnit.SECONDS);
+    public Boolean expire(String key, long time) {
+        return run(new RedisCallBack<Boolean>() {
+            @Override
+            public Boolean doInRedis(RedisTemplate redisTemplate) {
+                if (time > 0) {
+                    return redisTemplate.expire(key, time, TimeUnit.SECONDS);
+                }
+                return true;
             }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        });
     }
 
     /**
@@ -45,7 +57,12 @@ public class RedisUtil {
      * @return 时间(秒) 返回0代表为永久有效
      */
     public Long getExpire(String key) {
-        return redisTemplate.getExpire(key, TimeUnit.SECONDS);
+        return run(new RedisCallBack<Long>() {
+            @Override
+            public Long doInRedis(RedisTemplate redisTemplate) {
+                return redisTemplate.getExpire(key, TimeUnit.SECONDS);
+            }
+        });
     }
 
     /**
@@ -55,12 +72,12 @@ public class RedisUtil {
      * @return true 存在 false不存在
      */
     public Boolean hasKey(String key) {
-        try {
-            return redisTemplate.hasKey(key);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        return run(new RedisCallBack<Boolean>() {
+            @Override
+            public Boolean doInRedis(RedisTemplate redisTemplate) {
+                return redisTemplate.hasKey(key);
+            }
+        });
     }
 
     /**
@@ -68,15 +85,21 @@ public class RedisUtil {
      *
      * @param key 可以传一个值 或多个
      */
-    @SuppressWarnings("unchecked")
-    public void del(String... key) {
-        if (key != null && key.length > 0) {
-            if (key.length == 1) {
-                redisTemplate.delete(key[0]);
-            } else {
-                redisTemplate.delete(CollectionUtils.arrayToList(key));
+    public Boolean del(String... key) {
+        return run(new RedisCallBack<Boolean>() {
+            @Override
+            public Boolean doInRedis(RedisTemplate redisTemplate) {
+                if (key != null && key.length > 0) {
+                    if (key.length == 1) {
+                        return redisTemplate.delete(key[0]);
+                    } else {
+                        redisTemplate.delete(CollectionUtils.arrayToList(key));
+                        return true;
+                    }
+                }
+                return false;
             }
-        }
+        });
     }
 
     //============================String=============================
@@ -117,12 +140,12 @@ public class RedisUtil {
      * @return true成功 false 失败
      */
     public boolean set(String key, Object value, long time) {
+        return set(key, value, time, TimeUnit.SECONDS);
+    }
+
+    public boolean set(String key, Object value, long time, TimeUnit unit) {
         try {
-            if (time > 0) {
-                redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
-            } else {
-                set(key, value);
-            }
+            redisTemplate.opsForValue().set(key, value, time, unit);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

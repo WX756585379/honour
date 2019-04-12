@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honour.manager.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.honour.manager.entity.pojo.User">
+        <id column="pid" jdbcType="BIGINT" property="pid"/>
+        <result column="account" jdbcType="VARCHAR" property="account"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="question" jdbcType="VARCHAR" property="question"/>
+        <result column="answer" jdbcType="VARCHAR" property="answer"/>
+        <result column="login_time" jdbcType="TIMESTAMP" property="loginTime"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="login_ip" jdbcType="VARCHAR" property="loginIp"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        pid, `account`, `password`, nick_name, real_name, gender, avatar, open_id, question,
+        answer, login_time, email, phone, login_ip, `status`, create_time, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from m_user
+        where pid = #{pid,jdbcType=BIGINT}
+    </select>
+
+    <select id="loadUserByUsername" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from m_user
+        where `account` = #{userName}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM m_user
+        WHERE pid = #{pid,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.honour.manager.entity.pojo.User">
+        INSERT INTO m_user (pid, account, `password`,
+                            nick_name, real_name, gender,
+                            avatar, open_id, question,
+                            answer, login_time, email,
+                            phone, login_ip, `status`,
+                            create_time, update_time)
+        VALUES (#{pid,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+                                        #{nickName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
+                                        #{gender,jdbcType=INTEGER},
+                                        #{avatar,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
+                                        #{question,jdbcType=VARCHAR},
+                                        #{answer,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP},
+                #{email,jdbcType=VARCHAR},
+                #{phone,jdbcType=VARCHAR}, #{loginIp,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.honour.manager.entity.pojo.User">
+        insert into m_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="nickName != null">
+                nick_name,
+            </if>
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="question != null">
+                question,
+            </if>
+            <if test="answer != null">
+                answer,
+            </if>
+            <if test="loginTime != null">
+                login_time,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="loginIp != null">
+                login_ip,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="question != null">
+                #{question,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null">
+                #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="loginIp != null">
+                #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.honour.manager.entity.pojo.User">
+        update m_user
+        <set>
+            <if test="account != null">
+                `account` = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="question != null">
+                question = #{question,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                answer = #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="loginIp != null">
+                login_ip = #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where pid = #{pid,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByUserNameSelective" parameterType="com.honour.manager.entity.pojo.User">
+        update m_user
+        <set>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="question != null">
+                question = #{question,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                answer = #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="loginIp != null">
+                login_ip = #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where `account` = #{account}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.honour.manager.entity.pojo.User">
+        UPDATE m_user
+        SET `account`   = #{account,jdbcType=VARCHAR},
+            `password`  = #{password,jdbcType=VARCHAR},
+            nick_name   = #{nickName,jdbcType=VARCHAR},
+            real_name   = #{realName,jdbcType=VARCHAR},
+            gender      = #{gender,jdbcType=INTEGER},
+            avatar      = #{avatar,jdbcType=VARCHAR},
+            open_id     = #{openId,jdbcType=VARCHAR},
+            question    = #{question,jdbcType=VARCHAR},
+            answer      = #{answer,jdbcType=VARCHAR},
+            login_time  = #{loginTime,jdbcType=TIMESTAMP},
+            email       = #{email,jdbcType=VARCHAR},
+            phone       = #{phone,jdbcType=VARCHAR},
+            login_ip    = #{loginIp,jdbcType=VARCHAR},
+            `status`    = #{status,jdbcType=CHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE pid = #{pid,jdbcType=BIGINT}
+    </update>
+</mapper>

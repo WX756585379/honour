@@ -1,6 +1,6 @@
 package com.honour.server.web;
 
-import com.honour.server.utils.RedisUtil;
+import com.honour.server.utils.jedis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

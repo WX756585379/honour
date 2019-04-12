@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honour.manager.dao.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.honour.manager.entity.pojo.Menu">
+        <id column="pid" jdbcType="BIGINT" property="pid"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="component" jdbcType="VARCHAR" property="component"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="icon_cls" jdbcType="VARCHAR" property="iconCls"/>
+        <result column="keep_alive" jdbcType="INTEGER" property="keepAlive"/>
+        <result column="require_auth" jdbcType="INTEGER" property="requireAuth"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        pid, url, `path`, component, `name`, icon_cls, keep_alive, require_auth, parent_id,
+        `status`, create_time, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from m_menu
+        where pid = #{pid,jdbcType=BIGINT}
+    </select>
+
+    <select id="getPermissions" resultType="com.honour.manager.entity.pojo.Permission">
+        SELECT
+            a.name AS roleName,
+            c.url
+        FROM m_role AS a
+            LEFT JOIN m_menu_role b ON a.pid = b.role_id
+            LEFT JOIN m_menu AS c ON c.pid = b.menu_id
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM m_menu
+        WHERE pid = #{pid,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.honour.manager.entity.pojo.Menu">
+        INSERT INTO m_menu (pid, url, `path`,
+                            component, `name`, icon_cls,
+                            keep_alive, require_auth, parent_id,
+                            `status`, create_time, update_time
+        )
+        VALUES (#{pid,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR},
+                                        #{component,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+                                        #{iconCls,jdbcType=VARCHAR},
+                                        #{keepAlive,jdbcType=INTEGER}, #{requireAuth,jdbcType=INTEGER},
+                                        #{parentId,jdbcType=BIGINT},
+                                        #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.honour.manager.entity.pojo.Menu">
+        insert into m_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="path != null">
+                `path`,
+            </if>
+            <if test="component != null">
+                component,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="iconCls != null">
+                icon_cls,
+            </if>
+            <if test="keepAlive != null">
+                keep_alive,
+            </if>
+            <if test="requireAuth != null">
+                require_auth,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="component != null">
+                #{component,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="iconCls != null">
+                #{iconCls,jdbcType=VARCHAR},
+            </if>
+            <if test="keepAlive != null">
+                #{keepAlive,jdbcType=INTEGER},
+            </if>
+            <if test="requireAuth != null">
+                #{requireAuth,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.honour.manager.entity.pojo.Menu">
+        update m_menu
+        <set>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                `path` = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="component != null">
+                component = #{component,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="iconCls != null">
+                icon_cls = #{iconCls,jdbcType=VARCHAR},
+            </if>
+            <if test="keepAlive != null">
+                keep_alive = #{keepAlive,jdbcType=INTEGER},
+            </if>
+            <if test="requireAuth != null">
+                require_auth = #{requireAuth,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where pid = #{pid,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.honour.manager.entity.pojo.Menu">
+        UPDATE m_menu
+        SET url          = #{url,jdbcType=VARCHAR},
+            `path`       = #{path,jdbcType=VARCHAR},
+            component    = #{component,jdbcType=VARCHAR},
+            `name`       = #{name,jdbcType=VARCHAR},
+            icon_cls     = #{iconCls,jdbcType=VARCHAR},
+            keep_alive   = #{keepAlive,jdbcType=INTEGER},
+            require_auth = #{requireAuth,jdbcType=INTEGER},
+            parent_id    = #{parentId,jdbcType=BIGINT},
+            `status`     = #{status,jdbcType=CHAR},
+            create_time  = #{createTime,jdbcType=TIMESTAMP},
+            update_time  = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE pid = #{pid,jdbcType=BIGINT}
+    </update>
+</mapper>

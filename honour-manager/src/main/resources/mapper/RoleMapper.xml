@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honour.manager.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.honour.manager.entity.pojo.Role">
+        <id column="pid" jdbcType="BIGINT" property="pid"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="name_zh" jdbcType="VARCHAR" property="nameZh"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        pid, `name`, name_zh, `status`, create_time, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from m_role
+        where pid = #{pid,jdbcType=BIGINT}
+    </select>
+
+    <select id="getRolesByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select a.* from m_role a, m_user_role b
+        where a.pid = b.role_id and b.user_id = #{userId}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM m_role
+        WHERE pid = #{pid,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.honour.manager.entity.pojo.Role">
+        INSERT INTO m_role (pid, `name`, name_zh,
+                            `status`, create_time, update_time
+        )
+        VALUES (#{pid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{nameZh,jdbcType=VARCHAR},
+                #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.honour.manager.entity.pojo.Role">
+        insert into m_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="nameZh != null">
+                name_zh,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nameZh != null">
+                #{nameZh,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.honour.manager.entity.pojo.Role">
+        update m_role
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nameZh != null">
+                name_zh = #{nameZh,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where pid = #{pid,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.honour.manager.entity.pojo.Role">
+        UPDATE m_role
+        SET `name`      = #{name,jdbcType=VARCHAR},
+            name_zh     = #{nameZh,jdbcType=VARCHAR},
+            `status`    = #{status,jdbcType=CHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE pid = #{pid,jdbcType=BIGINT}
+    </update>
+</mapper>

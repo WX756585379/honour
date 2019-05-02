@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honour.server.dao.ChannelRoomModelMappingMapper">
+  <resultMap id="BaseResultMap" type="com.honour.server.entity.pojo.ChannelRoomModelMapping">
+    <id column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="channelCode" jdbcType="VARCHAR" property="channelcode" />
+    <result column="innerChannelRMId" jdbcType="BIGINT" property="innerchannelrmid" />
+    <result column="targetChannelRMId" jdbcType="BIGINT" property="targetchannelrmid" />
+    <result column="innerChannelUnitId" jdbcType="BIGINT" property="innerchannelunitid" />
+    <result column="innerRMId" jdbcType="BIGINT" property="innerrmid" />
+    <result column="innerSaleRMId" jdbcType="BIGINT" property="innersalermid" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="createBy" jdbcType="VARCHAR" property="createby" />
+    <result column="createAt" jdbcType="TIMESTAMP" property="createat" />
+    <result column="modifyBy" jdbcType="VARCHAR" property="modifyby" />
+    <result column="modifyAt" jdbcType="TIMESTAMP" property="modifyat" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pid, channelCode, innerChannelRMId, targetChannelRMId, innerChannelUnitId, innerRMId, 
+    innerSaleRMId, `status`, createBy, createAt, modifyBy, modifyAt
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from channelroommodelmapping
+    where pid = #{pid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from channelroommodelmapping
+    where pid = #{pid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.honour.server.entity.pojo.ChannelRoomModelMapping">
+    insert into channelroommodelmapping (pid, channelCode, innerChannelRMId, 
+      targetChannelRMId, innerChannelUnitId, innerRMId, 
+      innerSaleRMId, `status`, createBy, 
+      createAt, modifyBy, modifyAt
+      )
+    values (#{pid,jdbcType=BIGINT}, #{channelcode,jdbcType=VARCHAR}, #{innerchannelrmid,jdbcType=BIGINT}, 
+      #{targetchannelrmid,jdbcType=BIGINT}, #{innerchannelunitid,jdbcType=BIGINT}, #{innerrmid,jdbcType=BIGINT}, 
+      #{innersalermid,jdbcType=BIGINT}, #{status,jdbcType=CHAR}, #{createby,jdbcType=VARCHAR}, 
+      #{createat,jdbcType=TIMESTAMP}, #{modifyby,jdbcType=VARCHAR}, #{modifyat,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.honour.server.entity.pojo.ChannelRoomModelMapping">
+    insert into channelroommodelmapping
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="channelcode != null">
+        channelCode,
+      </if>
+      <if test="innerchannelrmid != null">
+        innerChannelRMId,
+      </if>
+      <if test="targetchannelrmid != null">
+        targetChannelRMId,
+      </if>
+      <if test="innerchannelunitid != null">
+        innerChannelUnitId,
+      </if>
+      <if test="innerrmid != null">
+        innerRMId,
+      </if>
+      <if test="innersalermid != null">
+        innerSaleRMId,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createby != null">
+        createBy,
+      </if>
+      <if test="createat != null">
+        createAt,
+      </if>
+      <if test="modifyby != null">
+        modifyBy,
+      </if>
+      <if test="modifyat != null">
+        modifyAt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="channelcode != null">
+        #{channelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="innerchannelrmid != null">
+        #{innerchannelrmid,jdbcType=BIGINT},
+      </if>
+      <if test="targetchannelrmid != null">
+        #{targetchannelrmid,jdbcType=BIGINT},
+      </if>
+      <if test="innerchannelunitid != null">
+        #{innerchannelunitid,jdbcType=BIGINT},
+      </if>
+      <if test="innerrmid != null">
+        #{innerrmid,jdbcType=BIGINT},
+      </if>
+      <if test="innersalermid != null">
+        #{innersalermid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createat != null">
+        #{createat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyat != null">
+        #{modifyat,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.honour.server.entity.pojo.ChannelRoomModelMapping">
+    update channelroommodelmapping
+    <set>
+      <if test="channelcode != null">
+        channelCode = #{channelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="innerchannelrmid != null">
+        innerChannelRMId = #{innerchannelrmid,jdbcType=BIGINT},
+      </if>
+      <if test="targetchannelrmid != null">
+        targetChannelRMId = #{targetchannelrmid,jdbcType=BIGINT},
+      </if>
+      <if test="innerchannelunitid != null">
+        innerChannelUnitId = #{innerchannelunitid,jdbcType=BIGINT},
+      </if>
+      <if test="innerrmid != null">
+        innerRMId = #{innerrmid,jdbcType=BIGINT},
+      </if>
+      <if test="innersalermid != null">
+        innerSaleRMId = #{innersalermid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createby != null">
+        createBy = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createat != null">
+        createAt = #{createat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        modifyBy = #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyat != null">
+        modifyAt = #{modifyat,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.honour.server.entity.pojo.ChannelRoomModelMapping">
+    update channelroommodelmapping
+    set channelCode = #{channelcode,jdbcType=VARCHAR},
+      innerChannelRMId = #{innerchannelrmid,jdbcType=BIGINT},
+      targetChannelRMId = #{targetchannelrmid,jdbcType=BIGINT},
+      innerChannelUnitId = #{innerchannelunitid,jdbcType=BIGINT},
+      innerRMId = #{innerrmid,jdbcType=BIGINT},
+      innerSaleRMId = #{innersalermid,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=CHAR},
+      createBy = #{createby,jdbcType=VARCHAR},
+      createAt = #{createat,jdbcType=TIMESTAMP},
+      modifyBy = #{modifyby,jdbcType=VARCHAR},
+      modifyAt = #{modifyat,jdbcType=TIMESTAMP}
+    where pid = #{pid,jdbcType=BIGINT}
+  </update>
+</mapper>

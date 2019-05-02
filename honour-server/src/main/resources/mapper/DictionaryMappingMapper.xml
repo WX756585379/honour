@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honour.server.dao.DictionaryMappingMapper">
+  <resultMap id="BaseResultMap" type="com.honour.server.entity.pojo.DictionaryMapping">
+    <id column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="channelCode" jdbcType="VARCHAR" property="channelcode" />
+    <result column="mappingTypeCode" jdbcType="VARCHAR" property="mappingtypecode" />
+    <result column="innerValue" jdbcType="VARCHAR" property="innervalue" />
+    <result column="innerValueRemark" jdbcType="VARCHAR" property="innervalueremark" />
+    <result column="targetValue" jdbcType="VARCHAR" property="targetvalue" />
+    <result column="targetValueRemark" jdbcType="VARCHAR" property="targetvalueremark" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="createBy" jdbcType="VARCHAR" property="createby" />
+    <result column="createAt" jdbcType="TIMESTAMP" property="createat" />
+    <result column="modifyBy" jdbcType="VARCHAR" property="modifyby" />
+    <result column="modifyAt" jdbcType="TIMESTAMP" property="modifyat" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pid, channelCode, mappingTypeCode, innerValue, innerValueRemark, targetValue, targetValueRemark, 
+    `status`, createBy, createAt, modifyBy, modifyAt
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dictionarymapping
+    where pid = #{pid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from dictionarymapping
+    where pid = #{pid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.honour.server.entity.pojo.DictionaryMapping">
+    insert into dictionarymapping (pid, channelCode, mappingTypeCode, 
+      innerValue, innerValueRemark, targetValue, 
+      targetValueRemark, `status`, createBy, 
+      createAt, modifyBy, modifyAt
+      )
+    values (#{pid,jdbcType=BIGINT}, #{channelcode,jdbcType=VARCHAR}, #{mappingtypecode,jdbcType=VARCHAR}, 
+      #{innervalue,jdbcType=VARCHAR}, #{innervalueremark,jdbcType=VARCHAR}, #{targetvalue,jdbcType=VARCHAR}, 
+      #{targetvalueremark,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createby,jdbcType=VARCHAR}, 
+      #{createat,jdbcType=TIMESTAMP}, #{modifyby,jdbcType=VARCHAR}, #{modifyat,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.honour.server.entity.pojo.DictionaryMapping">
+    insert into dictionarymapping
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="channelcode != null">
+        channelCode,
+      </if>
+      <if test="mappingtypecode != null">
+        mappingTypeCode,
+      </if>
+      <if test="innervalue != null">
+        innerValue,
+      </if>
+      <if test="innervalueremark != null">
+        innerValueRemark,
+      </if>
+      <if test="targetvalue != null">
+        targetValue,
+      </if>
+      <if test="targetvalueremark != null">
+        targetValueRemark,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createby != null">
+        createBy,
+      </if>
+      <if test="createat != null">
+        createAt,
+      </if>
+      <if test="modifyby != null">
+        modifyBy,
+      </if>
+      <if test="modifyat != null">
+        modifyAt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="channelcode != null">
+        #{channelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingtypecode != null">
+        #{mappingtypecode,jdbcType=VARCHAR},
+      </if>
+      <if test="innervalue != null">
+        #{innervalue,jdbcType=VARCHAR},
+      </if>
+      <if test="innervalueremark != null">
+        #{innervalueremark,jdbcType=VARCHAR},
+      </if>
+      <if test="targetvalue != null">
+        #{targetvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="targetvalueremark != null">
+        #{targetvalueremark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createat != null">
+        #{createat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyat != null">
+        #{modifyat,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.honour.server.entity.pojo.DictionaryMapping">
+    update dictionarymapping
+    <set>
+      <if test="channelcode != null">
+        channelCode = #{channelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingtypecode != null">
+        mappingTypeCode = #{mappingtypecode,jdbcType=VARCHAR},
+      </if>
+      <if test="innervalue != null">
+        innerValue = #{innervalue,jdbcType=VARCHAR},
+      </if>
+      <if test="innervalueremark != null">
+        innerValueRemark = #{innervalueremark,jdbcType=VARCHAR},
+      </if>
+      <if test="targetvalue != null">
+        targetValue = #{targetvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="targetvalueremark != null">
+        targetValueRemark = #{targetvalueremark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createby != null">
+        createBy = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createat != null">
+        createAt = #{createat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        modifyBy = #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyat != null">
+        modifyAt = #{modifyat,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.honour.server.entity.pojo.DictionaryMapping">
+    update dictionarymapping
+    set channelCode = #{channelcode,jdbcType=VARCHAR},
+      mappingTypeCode = #{mappingtypecode,jdbcType=VARCHAR},
+      innerValue = #{innervalue,jdbcType=VARCHAR},
+      innerValueRemark = #{innervalueremark,jdbcType=VARCHAR},
+      targetValue = #{targetvalue,jdbcType=VARCHAR},
+      targetValueRemark = #{targetvalueremark,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=CHAR},
+      createBy = #{createby,jdbcType=VARCHAR},
+      createAt = #{createat,jdbcType=TIMESTAMP},
+      modifyBy = #{modifyby,jdbcType=VARCHAR},
+      modifyAt = #{modifyat,jdbcType=TIMESTAMP}
+    where pid = #{pid,jdbcType=BIGINT}
+  </update>
+</mapper>

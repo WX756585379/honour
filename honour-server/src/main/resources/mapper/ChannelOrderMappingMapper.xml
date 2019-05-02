@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honour.server.dao.ChannelOrderMappingMapper">
+  <resultMap id="BaseResultMap" type="com.honour.server.entity.pojo.ChannelOrderMapping">
+    <id column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="channelCode" jdbcType="VARCHAR" property="channelcode" />
+    <result column="innerOrderId" jdbcType="BIGINT" property="innerorderid" />
+    <result column="targetChannelOrderId" jdbcType="BIGINT" property="targetchannelorderid" />
+    <result column="innerChannelUnitId" jdbcType="BIGINT" property="innerchannelunitid" />
+    <result column="targetChannelUnitId" jdbcType="BIGINT" property="targetchannelunitid" />
+    <result column="innerChannelRMId" jdbcType="BIGINT" property="innerchannelrmid" />
+    <result column="targetChannelRMId" jdbcType="BIGINT" property="targetchannelrmid" />
+    <result column="innerChannelProductId" jdbcType="BIGINT" property="innerchannelproductid" />
+    <result column="targetChannelProductId" jdbcType="BIGINT" property="targetchannelproductid" />
+    <result column="userPhone" jdbcType="VARCHAR" property="userphone" />
+    <result column="resultMessage" jdbcType="VARCHAR" property="resultmessage" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="createBy" jdbcType="VARCHAR" property="createby" />
+    <result column="createAt" jdbcType="TIMESTAMP" property="createat" />
+    <result column="modifyBy" jdbcType="VARCHAR" property="modifyby" />
+    <result column="modifyAt" jdbcType="TIMESTAMP" property="modifyat" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pid, channelCode, innerOrderId, targetChannelOrderId, innerChannelUnitId, targetChannelUnitId, 
+    innerChannelRMId, targetChannelRMId, innerChannelProductId, targetChannelProductId, 
+    userPhone, resultMessage, `status`, createBy, createAt, modifyBy, modifyAt
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from channelordermapping
+    where pid = #{pid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from channelordermapping
+    where pid = #{pid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.honour.server.entity.pojo.ChannelOrderMapping">
+    insert into channelordermapping (pid, channelCode, innerOrderId, 
+      targetChannelOrderId, innerChannelUnitId, 
+      targetChannelUnitId, innerChannelRMId, targetChannelRMId, 
+      innerChannelProductId, targetChannelProductId, 
+      userPhone, resultMessage, `status`, 
+      createBy, createAt, modifyBy, 
+      modifyAt)
+    values (#{pid,jdbcType=BIGINT}, #{channelcode,jdbcType=VARCHAR}, #{innerorderid,jdbcType=BIGINT}, 
+      #{targetchannelorderid,jdbcType=BIGINT}, #{innerchannelunitid,jdbcType=BIGINT}, 
+      #{targetchannelunitid,jdbcType=BIGINT}, #{innerchannelrmid,jdbcType=BIGINT}, #{targetchannelrmid,jdbcType=BIGINT}, 
+      #{innerchannelproductid,jdbcType=BIGINT}, #{targetchannelproductid,jdbcType=BIGINT}, 
+      #{userphone,jdbcType=VARCHAR}, #{resultmessage,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{createby,jdbcType=VARCHAR}, #{createat,jdbcType=TIMESTAMP}, #{modifyby,jdbcType=VARCHAR}, 
+      #{modifyat,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.honour.server.entity.pojo.ChannelOrderMapping">
+    insert into channelordermapping
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="channelcode != null">
+        channelCode,
+      </if>
+      <if test="innerorderid != null">
+        innerOrderId,
+      </if>
+      <if test="targetchannelorderid != null">
+        targetChannelOrderId,
+      </if>
+      <if test="innerchannelunitid != null">
+        innerChannelUnitId,
+      </if>
+      <if test="targetchannelunitid != null">
+        targetChannelUnitId,
+      </if>
+      <if test="innerchannelrmid != null">
+        innerChannelRMId,
+      </if>
+      <if test="targetchannelrmid != null">
+        targetChannelRMId,
+      </if>
+      <if test="innerchannelproductid != null">
+        innerChannelProductId,
+      </if>
+      <if test="targetchannelproductid != null">
+        targetChannelProductId,
+      </if>
+      <if test="userphone != null">
+        userPhone,
+      </if>
+      <if test="resultmessage != null">
+        resultMessage,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createby != null">
+        createBy,
+      </if>
+      <if test="createat != null">
+        createAt,
+      </if>
+      <if test="modifyby != null">
+        modifyBy,
+      </if>
+      <if test="modifyat != null">
+        modifyAt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="channelcode != null">
+        #{channelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="innerorderid != null">
+        #{innerorderid,jdbcType=BIGINT},
+      </if>
+      <if test="targetchannelorderid != null">
+        #{targetchannelorderid,jdbcType=BIGINT},
+      </if>
+      <if test="innerchannelunitid != null">
+        #{innerchannelunitid,jdbcType=BIGINT},
+      </if>
+      <if test="targetchannelunitid != null">
+        #{targetchannelunitid,jdbcType=BIGINT},
+      </if>
+      <if test="innerchannelrmid != null">
+        #{innerchannelrmid,jdbcType=BIGINT},
+      </if>
+      <if test="targetchannelrmid != null">
+        #{targetchannelrmid,jdbcType=BIGINT},
+      </if>
+      <if test="innerchannelproductid != null">
+        #{innerchannelproductid,jdbcType=BIGINT},
+      </if>
+      <if test="targetchannelproductid != null">
+        #{targetchannelproductid,jdbcType=BIGINT},
+      </if>
+      <if test="userphone != null">
+        #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="resultmessage != null">
+        #{resultmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createat != null">
+        #{createat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyat != null">
+        #{modifyat,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.honour.server.entity.pojo.ChannelOrderMapping">
+    update channelordermapping
+    <set>
+      <if test="channelcode != null">
+        channelCode = #{channelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="innerorderid != null">
+        innerOrderId = #{innerorderid,jdbcType=BIGINT},
+      </if>
+      <if test="targetchannelorderid != null">
+        targetChannelOrderId = #{targetchannelorderid,jdbcType=BIGINT},
+      </if>
+      <if test="innerchannelunitid != null">
+        innerChannelUnitId = #{innerchannelunitid,jdbcType=BIGINT},
+      </if>
+      <if test="targetchannelunitid != null">
+        targetChannelUnitId = #{targetchannelunitid,jdbcType=BIGINT},
+      </if>
+      <if test="innerchannelrmid != null">
+        innerChannelRMId = #{innerchannelrmid,jdbcType=BIGINT},
+      </if>
+      <if test="targetchannelrmid != null">
+        targetChannelRMId = #{targetchannelrmid,jdbcType=BIGINT},
+      </if>
+      <if test="innerchannelproductid != null">
+        innerChannelProductId = #{innerchannelproductid,jdbcType=BIGINT},
+      </if>
+      <if test="targetchannelproductid != null">
+        targetChannelProductId = #{targetchannelproductid,jdbcType=BIGINT},
+      </if>
+      <if test="userphone != null">
+        userPhone = #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="resultmessage != null">
+        resultMessage = #{resultmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createby != null">
+        createBy = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createat != null">
+        createAt = #{createat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        modifyBy = #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyat != null">
+        modifyAt = #{modifyat,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.honour.server.entity.pojo.ChannelOrderMapping">
+    update channelordermapping
+    set channelCode = #{channelcode,jdbcType=VARCHAR},
+      innerOrderId = #{innerorderid,jdbcType=BIGINT},
+      targetChannelOrderId = #{targetchannelorderid,jdbcType=BIGINT},
+      innerChannelUnitId = #{innerchannelunitid,jdbcType=BIGINT},
+      targetChannelUnitId = #{targetchannelunitid,jdbcType=BIGINT},
+      innerChannelRMId = #{innerchannelrmid,jdbcType=BIGINT},
+      targetChannelRMId = #{targetchannelrmid,jdbcType=BIGINT},
+      innerChannelProductId = #{innerchannelproductid,jdbcType=BIGINT},
+      targetChannelProductId = #{targetchannelproductid,jdbcType=BIGINT},
+      userPhone = #{userphone,jdbcType=VARCHAR},
+      resultMessage = #{resultmessage,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=CHAR},
+      createBy = #{createby,jdbcType=VARCHAR},
+      createAt = #{createat,jdbcType=TIMESTAMP},
+      modifyBy = #{modifyby,jdbcType=VARCHAR},
+      modifyAt = #{modifyat,jdbcType=TIMESTAMP}
+    where pid = #{pid,jdbcType=BIGINT}
+  </update>
+</mapper>
